@@ -15,15 +15,13 @@ The optional -n parameter (i.e. -2) specifies the number of files whose records 
 For example -2 will result in removal of records that appear in the first two files file0, file1. 
 
 The basic algorithm is to open every file and maintain a list of records, one from each file.
-The alphabetically earliest record is written to the standard output and the next record is read from that file and any other files which had the same record.
-For each of the files, the next record is read and the files are reordered into alphabetic order.
-Most of the time, the reordering does not require a full sort since only a few of the files changed. Shortcuts can be taken.
+The alphabetically earliest record is written to the standard output and the next record is read from that file and any other files which shared the same record.
+For each of the sharing files, the next record is read and the files are reordered according to the alphabetic order of their current record.
+Most of the time, the reordering does not require a full sort since only a few of the files read a new record. Shortcuts can be taken.
 The process iterates until all records from the files have been read.
 
 The initial application of the program was for use in solving a large sliding block problem using a brute force method.
-When determining all positions that could be reached in exactly 172 moves, we started with two files containing the set of positions reachable in 170 moves 
-and 171 moves respectively. From the 171 move file we generated adjacent positions 100,000,000 at a time, sorting them, removing duplicates and writing to disk.
-This resulted in around 300 sorted files, each of which had about 100,000,000 positions. 
+When determining all positions that could be reached in exactly 172 moves from the initial position, we started with two files containing the set of positions reachable in exactly 170 and 171 moves respectively. From the 171 move file we generated adjacent positions 100,000,000 at a time, sorting them, removing duplicates and writing to disk. This resulted in around 300 sorted files, each of which had about 60,000,000 positions. Each of the positions in the files was reachable in either 170, 171 or 172 moves from the starting position.
 Then the comb program was run with the -2 option: comb -2 wave170 wave171 wave172_0 wave172_1 .... > wave172
 It combined all the positions in the 300 sorted files while removing the positions that could be reached in exactly 170 or 171 moves.    
 The resulting file (wave172) contained all positions reachable in exactly 172 moves. 
