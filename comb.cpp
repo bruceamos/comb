@@ -160,7 +160,7 @@ int main(int argc, char**argv) {
     if (order[0] < numExclude) use = false;
     for (i = 1; i < numFiles && !files[order[i]]->eof && !strcmp((char*)files[order[i]]->rec, (char*)files[order[0]]->rec); i++) {
       //if it is the same ...
-      if (order[i] < numExclude) use = false; //this record is present in one for the first two files
+      if (order[i] < numExclude) use = false; //this record is present in one of the exclusion files
       files[order[i]]->advance();
       numAdvanced++;
       if (files[order[i]]->eof) numEOF++; //the file was not eof before the advance
